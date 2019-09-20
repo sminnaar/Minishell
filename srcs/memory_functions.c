@@ -6,18 +6,18 @@
 /*   By: lpetsoan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 10:37:14 by lpetsoan          #+#    #+#             */
-/*   Updated: 2019/09/18 11:02:27 by sminnaar         ###   ########.fr       */
+/*   Updated: 2019/09/18 18:20:01 by sminnaar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "../shell.h"
+#include "../shell.h"
 
 /*
-** This function will be used to free an array vector and its malloc'd 
+** This function will be used to free an array vector and its malloc'd
 ** holder.
- */
+*/
 
-void	free_vector(char ** vec, int size)
+void	free_vector(char **vec, int size)
 {
 	int i;
 

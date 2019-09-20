@@ -6,7 +6,7 @@
 /*   By: lpetsoan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:31:40 by lpetsoan          #+#    #+#             */
-/*   Updated: 2019/09/18 11:01:17 by sminnaar         ###   ########.fr       */
+/*   Updated: 2019/09/18 18:56:41 by sminnaar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		parse_command(char **av, char **env)
 {
 	static char			*commands[COMMANDS];
-	static functions	exec[FUNCTIONS];
+	static t_functions	exec[FUNCTIONS];
 	int					i;
 
 	i = 0;
@@ -74,13 +74,16 @@ void	cd(char **env, char **av)
 	char	cwd[255];
 
 	i = 0;
+	path = NULL;
 	while (av[i] != NULL)
 		i++;
-	if (i == 0 || ft_strcmp(av[0], "~") == 0)
+	if (i == 0 || ft_strcmp(av[0], "~") == 0 || ft_strcmp(av[0], "-") == 0)
 	{
-		path = env_var_value(env, "HOME");
-		if (chdir(path) == -1)
-			ft_putendl("pwd: no such file direcotory exists.");
+		if (i == 0 || ft_strcmp(av[0], "~") == 0)
+			path = env_var_value(env, "HOME");
+		else if (ft_strcmp(av[0], "-") == 0)
+			path = env_var_value(env, "OLDPWD");
+		(chdir(path) == -1) ? ft_putendl(PATHERR) : 0;
 		free(path);
 	}
 	else if (chdir(av[0]) == -1)
@@ -100,11 +103,14 @@ void	echo(char **env, char **av)
 	free(tmp);
 	while (*av != NULL)
 	{
-		ft_putstr(*av);
+		tmp = *av;
+		if (*tmp == '"')
+			tmp++;
+		ft_putstr(tmp);
 		ft_putstr(" ");
 		av++;
 	}
-	puts("");
+	ft_putendl("");
 }
 
 void	pwd(char **env, char **av)

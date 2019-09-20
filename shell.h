@@ -6,17 +6,18 @@
 /*   By: lpetsoan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 12:07:21 by lpetsoan          #+#    #+#             */
-/*   Updated: 2019/09/18 11:07:04 by sminnaar         ###   ########.fr       */
+/*   Updated: 2019/09/19 12:23:29 by sminnaar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
-# define COMMANDS 7
+# define COMMANDS 8
 # define FUNCTIONS COMMANDS - 1
 # define PROMPT "$>"
 # define BUILTS "BUILTINFUNC"
-# include "libft/incs/libft.h"
+# define PATHERR "pwd: no such file or directory"
+# include "libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
@@ -26,11 +27,12 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <fcntl.h>
 
-typedef void (*functions)();
+typedef	void	((*t_functions)());
 
 int		parse_command(char **av, char **env);
-void	builtin_functions(functions *exec);
+void	builtin_functions(t_functions *exec);
 void	prep_commands(char **av);
 void	echo(char **av, char **env);
 void	cd(char **av, char **env);
@@ -55,5 +57,6 @@ void	free_vector(char **vec, int size);
 void	clean_join(char **dst, char *src);
 char	**prep_env_vec(char **sys_vec);
 void	parse_env_var(char **env, char **input_split);
+void	set(char **env, char **av);
 
 #endif
